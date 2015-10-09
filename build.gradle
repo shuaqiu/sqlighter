@@ -1,0 +1,66 @@
+
+ext {
+    autoService = "1.0-rc2"
+    javapoet = "1.3.0"
+
+    junit = "4.12"
+}
+
+subprojects({
+    group 'com.shuaqiu.sqlighter'
+    version '1.0'
+
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType(Javadoc) {
+        options.encoding = "UTF-8"
+    }
+
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+    }
+
+    task javadocJar (type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourceJar {
+                    classifier "sources"
+                }
+
+                artifact javadocJar {
+                    classifier "javadoc"
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                url "http://yomnn.wicp.net:9080/repository/internal"
+                credentials {
+                    username = "yomnn"
+                    password = "ym3312338"
+                }
+            }
+        }
+    }
+})
