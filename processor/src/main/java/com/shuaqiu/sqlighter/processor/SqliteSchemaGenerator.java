@@ -76,6 +76,13 @@ public class SqliteSchemaGenerator {
 
             final SqliteId sqliteId = column.getAnnotation(SqliteId.class);
             if (sqliteId != null) {
+                // 如果之前已经有primary key 了, 则替换掉.
+                final int prePrimaryKey = ddl.indexOf(" primary key");
+                if  (prePrimaryKey > 0) {
+                    int prePrimaryKeyComma = ddl.indexOf(",", prePrimaryKey);
+                    ddl.delete(prePrimaryKey, prePrimaryKeyComma);
+                }
+
                 ddl.append(" primary key");
 
                 if (sqliteId.autoIncrement()) {
