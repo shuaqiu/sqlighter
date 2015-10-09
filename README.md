@@ -10,7 +10,7 @@ a SQLite helper lib
   ```
   repositories {
     // ...
-    maven { url "https://jitpack.io" }
+    maven { url "http://yomnn.wicp.net:9080/repository/internal" }
   }
   ```
   
@@ -19,6 +19,7 @@ a SQLite helper lib
   ```
   dependencies {
     // ...
-    compile 'com.github.shuaqiu:sqlighter:1.0'
+    compile 'com.shuaqiu.sqlighter:core:1.0'
+    apt 'com.shuaqiu.sqlighter:processor:1.0'
   }
-	```
+  ```
