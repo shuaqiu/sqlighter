@@ -6,5 +6,10 @@ package com.shuaqiu.sqlighter;
  */
 public interface SqliteSchemaBuilder {
 
+    /**
+     * 构造建表语句
+     *
+     * @return 建表语句
+     */
     String build();
 }

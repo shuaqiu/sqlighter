@@ -12,6 +12,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface SqliteId {
 
-    /** 主键是否自增 */
+    /**
+     * 主键是否自增
+     *
+     * @return 主键是否自增
+     */
     boolean autoIncrement() default false;
 }
