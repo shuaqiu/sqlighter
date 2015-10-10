@@ -52,4 +52,40 @@ public final class FieldUtils {
 
         return fields;
     }
+
+    /**
+     * 获取到这个字段的类型
+     *
+     * @param typeUtils    Type 的Utility
+     * @param fieldElement 字段
+     * @return 这个字段的类型
+     */
+    public static TypeElement getFieldTypeElement(final Types typeUtils, final VariableElement fieldElement) {
+        final Element element = typeUtils.asElement(fieldElement.asType());
+        return (TypeElement) element;
+    }
+
+    /**
+     * 获取到这个字段的类型名称
+     *
+     * @param typeUtils    Type 的Utility
+     * @param fieldElement 字段
+     * @return 这个字段的类型名称
+     */
+    public static String getFieldTypeSimpleName(final Types typeUtils, final VariableElement fieldElement) {
+        final TypeElement fieldTypeElement = getFieldTypeElement(typeUtils, fieldElement);
+        return fieldTypeElement.getSimpleName().toString();
+    }
+
+    /**
+     * 获取到这个字段的类型的全名
+     *
+     * @param typeUtils    Type 的Utility
+     * @param fieldElement 字段
+     * @return 这个字段的类型的全名
+     */
+    public static String getFieldTypeQualifiedName(final Types typeUtils, final VariableElement fieldElement) {
+        final TypeElement fieldTypeElement = getFieldTypeElement(typeUtils, fieldElement);
+        return fieldTypeElement.getQualifiedName().toString();
+    }
 }

@@ -50,7 +50,7 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
      */
     private MethodSpec buildToContentValuesMethodSpec(final TypeElement classElement) {
         final MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("toContentValues");
-        methodBuilder.addModifiers(Modifier.PUBLIC);
+        methodBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         methodBuilder.returns(CONTENT_VALUES);
 
         final TypeName typeName = TypeName.get(classElement.asType());
@@ -66,7 +66,9 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
             }
 
             final String fieldName = field.getSimpleName().toString();
-            methodBuilder.addStatement("values.put($S, $L)", fieldName, "data.get" + capitalize(fieldName) + "()");
+            final  String getFieldValueStatement = buildGetFieldValueStatement(field);
+
+            methodBuilder.addStatement("values.put($S, $L)", fieldName, getFieldValueStatement);
         }
 
         methodBuilder.addStatement("return values");
@@ -74,6 +76,31 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
         return methodBuilder.build();
     }
 
+    /**
+     * 构建获取字段值的语句: data.getXxx(). 主要是对于Date 这些类型, 需要转换成long 格式
+     * @param field 字段元素
+     * @return 获取字段值的语句
+     */
+    private String buildGetFieldValueStatement(final VariableElement field) {
+        final String fieldName = field.getSimpleName().toString();
+        final String getFieldValueStatement = "data.get" + capitalize(fieldName) + "()";
+
+        final String fieldTypeName = FieldUtils.getFieldTypeQualifiedName(typeUtils, field);
+        System.err.println("fieldTypeName ---> " + fieldTypeName + " for " + fieldName);
+
+        switch (fieldTypeName) {
+            case "java.util.Date":
+                return getFieldValueStatement + " == null ? null : " + getFieldValueStatement + ".getTime()";
+        }
+
+        return getFieldValueStatement;
+    }
+
+    /**
+     * 将字符串的首字母大写
+     * @param str 字符串
+     * @return 首字母大写后的字符串
+     */
     private String capitalize(final String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }

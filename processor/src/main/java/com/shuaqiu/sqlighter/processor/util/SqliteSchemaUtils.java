@@ -3,8 +3,6 @@ package com.shuaqiu.sqlighter.processor.util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Types;
@@ -134,11 +132,9 @@ public class SqliteSchemaUtils {
      */
     private static String getColumnType(final Types typeUtils, final VariableElement fieldElement) {
         // 获取到这个字段的类型
-        final Element element = typeUtils.asElement(fieldElement.asType());
-        final TypeElement typeElement = (TypeElement) element;
+        final String typeName = FieldUtils.getFieldTypeSimpleName(typeUtils, fieldElement);
 
         // 从映射表中获取
-        final String typeName = typeElement.getSimpleName().toString();
         final String columnType = SQL_TYPE_MAPPING.get(typeName);
         if (columnType == null) {
             return SQL_TYPE_MAPPING.get(DEFAULT_COLUMN);
