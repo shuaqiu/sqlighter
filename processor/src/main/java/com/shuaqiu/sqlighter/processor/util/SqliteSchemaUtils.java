@@ -26,11 +26,18 @@ public class SqliteSchemaUtils {
         SQL_TYPE_MAPPING.put(DEFAULT_COLUMN, "TEXT");
 
         SQL_TYPE_MAPPING.put("String", "TEXT");
+
         SQL_TYPE_MAPPING.put("Integer", "INTEGER");
+        SQL_TYPE_MAPPING.put("int", "INTEGER");
         SQL_TYPE_MAPPING.put("Long", "INTEGER");
+        SQL_TYPE_MAPPING.put("long", "INTEGER");
         SQL_TYPE_MAPPING.put("Date", "INTEGER");
+
         SQL_TYPE_MAPPING.put("Double", "REAL");
         SQL_TYPE_MAPPING.put("Float", "REAL");
+
+        SQL_TYPE_MAPPING.put("Boolean", "BOOLEAN");
+        SQL_TYPE_MAPPING.put("boolean", "BOOLEAN");
     }
 
     /**

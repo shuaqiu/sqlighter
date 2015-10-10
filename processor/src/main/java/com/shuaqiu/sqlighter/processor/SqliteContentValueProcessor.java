@@ -83,7 +83,9 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
      */
     private String buildGetFieldValueStatement(final VariableElement field) {
         final String fieldName = field.getSimpleName().toString();
-        final String getFieldValueStatement = "data.get" + capitalize(fieldName) + "()";
+        final String capitalizeFieldName = capitalize(fieldName);
+
+        final String getFieldValueStatement = "data.get" + capitalizeFieldName + "()";
 
         final String fieldTypeName = FieldUtils.getFieldTypeQualifiedName(typeUtils, field);
         System.err.println("fieldTypeName ---> " + fieldTypeName + " for " + fieldName);
@@ -91,6 +93,13 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
         switch (fieldTypeName) {
             case "java.util.Date":
                 return getFieldValueStatement + " == null ? null : " + getFieldValueStatement + ".getTime()";
+
+            case "boolean":
+            case "java.lang.Boolean":
+                if (fieldName.startsWith("is")) {
+                    return "data." + fieldName + "()";
+                }
+                return "data.is" + capitalizeFieldName + "()";
         }
 
         return getFieldValueStatement;

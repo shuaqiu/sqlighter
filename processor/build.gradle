@@ -8,5 +8,6 @@ dependencies {
 
     compile "com.squareup:javapoet:$javapoet"
 
+    testCompile "com.google.testing.compile:compile-testing:$compileTesting"
     testCompile "junit:junit:$junit"
 }

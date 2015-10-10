@@ -61,7 +61,8 @@ public final class FieldUtils {
      * @return 这个字段的类型
      */
     public static TypeElement getFieldTypeElement(final Types typeUtils, final VariableElement fieldElement) {
-        final Element element = typeUtils.asElement(fieldElement.asType());
+        final TypeMirror typeMirror = fieldElement.asType();
+        final Element element = typeUtils.asElement(typeMirror);
         return (TypeElement) element;
     }
 
@@ -73,7 +74,12 @@ public final class FieldUtils {
      * @return 这个字段的类型名称
      */
     public static String getFieldTypeSimpleName(final Types typeUtils, final VariableElement fieldElement) {
-        final TypeElement fieldTypeElement = getFieldTypeElement(typeUtils, fieldElement);
+        final TypeMirror typeMirror = fieldElement.asType();
+        if (typeMirror.getKind().isPrimitive()) {
+            return typeMirror.toString();
+        }
+
+        final TypeElement fieldTypeElement = (TypeElement) typeUtils.asElement(typeMirror);
         return fieldTypeElement.getSimpleName().toString();
     }
 
@@ -85,7 +91,12 @@ public final class FieldUtils {
      * @return 这个字段的类型的全名
      */
     public static String getFieldTypeQualifiedName(final Types typeUtils, final VariableElement fieldElement) {
-        final TypeElement fieldTypeElement = getFieldTypeElement(typeUtils, fieldElement);
+        final TypeMirror typeMirror = fieldElement.asType();
+        if (typeMirror.getKind().isPrimitive()) {
+            return typeMirror.toString();
+        }
+
+        final TypeElement fieldTypeElement = (TypeElement) typeUtils.asElement(typeMirror);
         return fieldTypeElement.getQualifiedName().toString();
     }
 }
