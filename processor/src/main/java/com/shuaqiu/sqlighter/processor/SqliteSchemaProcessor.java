@@ -44,7 +44,7 @@ public class SqliteSchemaProcessor extends SqliteProcessor {
     }
 
     @Override
-    protected Class<?> getSuperInterface() {
-        return SqliteSchemaBuilder.class;
+    protected Class<?>[] getSuperInterfaces() {
+        return new Class<?>[]{SqliteSchemaBuilder.class};
     }
 }

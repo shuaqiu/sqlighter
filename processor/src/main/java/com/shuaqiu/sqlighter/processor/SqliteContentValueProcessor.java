@@ -77,9 +77,4 @@ public class SqliteContentValueProcessor extends SqliteProcessor {
     private String capitalize(final String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
-
-    @Override
-    protected Class<?> getSuperInterface() {
-        return null;
-    }
 }

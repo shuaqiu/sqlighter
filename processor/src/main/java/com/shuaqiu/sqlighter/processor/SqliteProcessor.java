@@ -157,18 +157,43 @@ public abstract class SqliteProcessor extends AbstractProcessor {
         final TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className);
         classBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
-        for (final MethodSpec methodSpec : methodSpecs) {
-            classBuilder.addMethod(methodSpec);
+        if (methodSpecs != null && methodSpecs.length > 0) {
+            for (final MethodSpec methodSpec : methodSpecs) {
+                classBuilder.addMethod(methodSpec);
+            }
         }
 
-        final Class<?> superInterface = getSuperInterface();
-        if (superInterface != null) {
-            classBuilder.addSuperinterface(superInterface);
+        final Class<?> superClass = getSuperClass();
+        if (superClass != null) {
+            classBuilder.superclass(superClass);
+        }
+
+        final Class<?>[] superInterfaces = getSuperInterfaces();
+        if (superInterfaces != null && superInterfaces.length > 0) {
+            for (final Class<?> superInterface : superInterfaces) {
+                classBuilder.addSuperinterface(superInterface);
+            }
         }
         return classBuilder.build();
     }
 
-    protected abstract Class<?> getSuperInterface();
+    /**
+     * 获取生成的类需要继承的基类(默认不继承任何基类)
+     *
+     * @return 生成的类需要继承的基类
+     */
+    protected Class<?> getSuperClass() {
+        return null;
+    }
+
+    /**
+     * 获取生成的类需要实现的接口(默认不实现任何接口)
+     *
+     * @return 生成的类需要实现的接口
+     */
+    protected Class<?>[] getSuperInterfaces() {
+        return null;
+    }
 
     /**
      * 生成Java 文件
