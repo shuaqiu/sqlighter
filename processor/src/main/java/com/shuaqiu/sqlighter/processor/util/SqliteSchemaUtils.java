@@ -73,7 +73,6 @@ public class SqliteSchemaUtils {
             ddl.append(" ");
 
             final String columnType = getColumnType(typeUtils, column);
-            System.err.println("columnType ---> " + columnType + " for " + columnName);
             ddl.append(columnType);
 
             final SqliteId sqliteId = column.getAnnotation(SqliteId.class);
@@ -118,17 +117,15 @@ public class SqliteSchemaUtils {
      * @param classElement 当前的{@link SqliteTable } 标记的Element
      * @return 表名
      */
-    private static String getTableName(final TypeElement classElement) {
+    public static String getTableName(final TypeElement classElement) {
         final SqliteTable annotation = classElement.getAnnotation(SqliteTable.class);
         final String value = annotation.value();
-        System.err.println("SqliteTable annotation value is : " + value);
 
         if (value == null || value.trim().equals("")) {
             return classElement.getSimpleName().toString();
         }
         return value;
     }
-
 
     /**
      * 获取字段对应的数据库字段

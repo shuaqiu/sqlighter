@@ -157,17 +157,20 @@ public abstract class SqliteProcessor extends AbstractProcessor {
         final TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className);
         classBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
+        // 添加方法
         if (methodSpecs != null && methodSpecs.length > 0) {
             for (final MethodSpec methodSpec : methodSpecs) {
                 classBuilder.addMethod(methodSpec);
             }
         }
 
+        // 添加基类
         final Class<?> superClass = getSuperClass();
         if (superClass != null) {
             classBuilder.superclass(superClass);
         }
 
+        // 添加接口
         final Class<?>[] superInterfaces = getSuperInterfaces();
         if (superInterfaces != null && superInterfaces.length > 0) {
             for (final Class<?> superInterface : superInterfaces) {

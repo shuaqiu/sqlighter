@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Date;
+
 import com.shuaqiu.sqlighter.SqliteId;
 import com.shuaqiu.sqlighter.SqliteTable;
 
@@ -14,4 +16,8 @@ public class SimpleBean {
     private int id;
 
     private boolean active;
+
+    private String str;
+
+    private Date date;
 }

@@ -21,10 +21,10 @@ public class ProcessorTest {
     }
 
     @Test
-    public void testContentValue() {
+    public void testHelper() {
         Truth.ASSERT.about(javaSource())
                 .that(JavaFileObjects.forResource("test/SimpleBean.java"))
-                .processedWith(new SqliteContentValueProcessor())
+                .processedWith(new SqliteHelperProcessor())
                 .failsToCompile()
                 .withErrorContaining("package android.content does not exist");
     }
