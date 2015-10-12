@@ -13,14 +13,6 @@ import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 public class ProcessorTest {
 
     @Test
-    public void testSchema() {
-        Truth.ASSERT.about(javaSource())
-                .that(JavaFileObjects.forResource("test/SimpleBean.java"))
-                .processedWith(new SqliteSchemaProcessor())
-                .compilesWithoutError();
-    }
-
-    @Test
     public void testHelper() {
         Truth.ASSERT.about(javaSource())
                 .that(JavaFileObjects.forResource("test/SimpleBean.java"))

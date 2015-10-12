@@ -43,9 +43,17 @@ public class SqliteHelperProcessor extends SqliteProcessor {
     protected MethodSpec[] buildMethodSpecs(final TypeElement classElement) {
         final MethodSpec constructor = buildConstructor();
         final MethodSpec getTableNameMethodSpec = buildGetTableNameMethodSpec(classElement);
+        final MethodSpec schemaMethodSpec = buildBuildMethodSpec(classElement);
         final MethodSpec toContentValuesMethodSpec = buildToContentValuesMethodSpec(classElement);
         final MethodSpec fromCursorMethodSpec = buildFromCursorMethodSpec(classElement);
-        return new MethodSpec[]{constructor, getTableNameMethodSpec, toContentValuesMethodSpec, fromCursorMethodSpec};
+
+        return new MethodSpec[]{
+                constructor,
+                getTableNameMethodSpec,
+                schemaMethodSpec,
+                toContentValuesMethodSpec,
+                fromCursorMethodSpec
+        };
     }
 
     /**
@@ -72,6 +80,23 @@ public class SqliteHelperProcessor extends SqliteProcessor {
 
         final String tableName = SqliteSchemaUtils.getTableName(classElement);
         methodBuilder.addStatement("return $S", tableName);
+
+        return methodBuilder.build();
+    }
+
+    /**
+     * schema 方法定义
+     *
+     * @param classElement 当前的{@link SqliteTable } 标记的Element
+     * @return schema 方法定义
+     */
+    private MethodSpec buildBuildMethodSpec(final TypeElement classElement) {
+        final MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("schema");
+        methodBuilder.addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+        methodBuilder.returns(String.class);
+
+        final String schema = SqliteSchemaUtils.generalSchema(typeUtils, classElement);
+        methodBuilder.addStatement("return $S", schema);
 
         return methodBuilder.build();
     }
