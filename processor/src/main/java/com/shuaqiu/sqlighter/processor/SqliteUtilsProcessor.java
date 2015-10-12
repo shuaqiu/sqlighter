@@ -21,9 +21,9 @@ import com.squareup.javapoet.TypeName;
  * SQLite ContentValue 生成
  */
 @AutoService(Processor.class)
-public class SqliteHelperProcessor extends SqliteProcessor {
+public class SqliteUtilsProcessor extends SqliteProcessor {
 
-    private static final String SUFFIX = "Helper";
+    private static final String SUFFIX = "Utils";
 
     private static final ClassName CONTENT_VALUES = ClassName.get("android.content", "ContentValues");
     private static final ClassName CURSOR = ClassName.get("android.database", "Cursor");
